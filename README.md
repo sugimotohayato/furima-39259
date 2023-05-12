@@ -9,7 +9,7 @@
 | last_name          | string   | null: false               |
 | first_name_kana    | string   | null: false               |
 | last_name_kana     | string   | null: false               |
-| birthday           | date     | null: false               |
+| birth              | date     | null: false               |
 
 
 ### Association
@@ -25,10 +25,10 @@
 | data          | text        | null: false                    |
 | category_id   | integer     | null: false                    |
 | price         | integer     | null: false                    |
-| situation_id  | integer     | null: false                    |
+| condition_id  | integer     | null: false                    |
 | postage_id    | integer     | null: false                    |
-| prefecture_id | integer     | null: false                    |
-| send_day_id   | integer     | null: false                    |
+| state_id      | integer     | null: false                    |
+| shipping_id   | integer     | null: false                    |
 | user          | references  | null: false, foreign_key: true |
 
 ### Association
@@ -53,8 +53,8 @@
 
 | Column        | Type        | Options                        |
 | --------------| ----------- | ------------------------------ |
-| post          | string      | null: false                    |
-| prefecture_id | integer     | null: false                    |
+| postcode      | string      | null: false                    |
+| state_id      | integer     | null: false                    |
 | city          | string      | null: false                    |
 | address       | string      | null: false                    |
 | building      | string      |                                |
