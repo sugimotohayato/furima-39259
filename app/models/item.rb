@@ -14,8 +14,8 @@ class Item < ApplicationRecord
   validates :category_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :price,
       presence: true,
-      length: { minimum: 3, maximum: 7 , message: "is out of setting range"},
-      format: { with: /\A[\d]+\z/ , message: "is invalid. Input half-width characters"}
+      numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "is out of setting range" },
+      numericality: { only_integer: true, message: "is invalid. Input half-width characters"}
   validates :condition_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :postage_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :state_id, numericality: { other_than: 1 , message: "can't be blank"}
