@@ -134,13 +134,11 @@
         <div class='item-img-content'>
           <%= image_tag(item.image, alt: "item-sample.png", class: "item-img") %>
 
-          <%# 商品が売れていればsold outを表示しましょう %>
-          <%# if （ここに条件文） %>
+          <% if @orders.any? { |order| order.item_id == item.id } %>
           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
-          <%# end %>
-          <%# //商品が売れていればsold outを表示しましょう %>
+          <% end %>
 
         </div>
         <div class='item-info'>
