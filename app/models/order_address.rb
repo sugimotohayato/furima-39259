@@ -10,7 +10,7 @@ class OrderAddress
     validates :state_id, numericality: {other_than: 0, message: "can't be blank"}
     validates :city
     validates :address
-    validates :tel, numericality: {only_integer: true, message: "tel is invalid. Input half-width numbers"}
+    validates :tel, numericality: {only_integer: true, message: "is invalid. Input half-width numbers"}
   end
 
   def save
