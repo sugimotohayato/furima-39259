@@ -1,10 +1,12 @@
 class ItemsController < ApplicationController
   before_action :move_to_sign_in, only: [:new, :edit, :destroy]
   before_action :move_to_index, only: [:edit, :destroy]
+  before_action :move_to_index2, only: :edit
   before_action :set_item, only: [:edit, :update, :show, :destroy]
 
   def index
-    @items = Item.includes(:user).order('created_at DESC')
+    @items = Item.includes(:user).order('items.created_at DESC')
+    @orders = Order.where(item_id: @items.pluck(:id))
   end
 
   def new
@@ -21,6 +23,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @orders = Order.where(item_id: @item.id)
   end
 
   def edit
@@ -56,8 +59,12 @@ class ItemsController < ApplicationController
     redirect_to action: :index
   end
 
+  def move_to_index2
+    item_id = params[:id]
+    redirect_to root_path if Order.exists?(item_id: item_id)
+  end
+
   def set_item
     @item = Item.find(params[:id])
   end
-
 end
