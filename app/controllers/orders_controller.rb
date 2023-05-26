@@ -13,8 +13,9 @@ class OrdersController < ApplicationController
     @item = Item.find(params[:item_id])
     @order_address = OrderAddress.new(order_params)
     if @order_address.valid?
+      pay_item
       @order_address.save
-      redirect_to root_path
+      return redirect_to root_path
     else
       render :index
     end
@@ -23,8 +24,9 @@ class OrdersController < ApplicationController
   private
 
   def order_params
+    item_price = @item.price.to_i 
     params.require(:order_address).permit(:postcode, :state_id, :city, :address, :building, :tel)
-    .merge(user_id: current_user.id, item_id: params[:item_id])
+    .merge(user_id: current_user.id, item_id: params[:item_id],token: params[:token],price: item_price)
   end
 
   def move_to_sign_in
@@ -36,6 +38,15 @@ class OrdersController < ApplicationController
     if current_user.id == Item.find(item_id).user_id || Order.exists?(item_id: item_id)
       redirect_to root_path
     end
+  end
+
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: order_params[:price],  # 商品の値段
+      card: order_params[:token],    # カードトークン
+      currency: 'jpy'                 # 通貨の種類（日本円）
+    )
   end
 
 end
