@@ -55,6 +55,7 @@ class ItemsController < ApplicationController
 
   def move_to_index
     return if user_signed_in? && current_user.id == Item.find(params[:id]).user_id
+
     redirect_to action: :index
   end
 
@@ -62,8 +63,8 @@ class ItemsController < ApplicationController
     item_id = params[:id]
     redirect_to root_path if Order.exists?(item_id: item_id)
   end
+
   def set_item
     @item = Item.find(params[:id])
   end
-
 end
